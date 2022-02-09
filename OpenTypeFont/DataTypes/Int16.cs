@@ -11,5 +11,9 @@ namespace OpenTypeFont.DataTypes
         private readonly short _value;
         public readonly short Value => _value;
         public Int16(short value) => _value = value;
+        public static explicit operator Int16(short v)
+        {
+            return new Int16(v);
+        }
     }
 }
