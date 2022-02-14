@@ -14,8 +14,14 @@ namespace OpenTypeFont.DataTypes
 
         public static explicit operator Uint24(uint v)
         {
+            if (v > 8388607)
+                throw new ArgumentOutOfRangeException(nameof(v));
             // this will trim the first high-order bits from the uint
-            return new Uint24((v & 0xFFFFFF)); 
+            return new Uint24(v & 0xFFFFFF); 
+        }
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }

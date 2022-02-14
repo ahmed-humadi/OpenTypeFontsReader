@@ -14,5 +14,9 @@ namespace OpenTypeFont.DataTypes
         {
             _value = value;
         }
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

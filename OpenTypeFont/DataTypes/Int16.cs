@@ -15,5 +15,9 @@ namespace OpenTypeFont.DataTypes
         {
             return new Int16(v);
         }
+        public static F2DOT14 operator /(Int16 v1, Int16 v2)
+        {
+            return new F2DOT14(v1.Value / v2.Value);
+        }
     }
 }

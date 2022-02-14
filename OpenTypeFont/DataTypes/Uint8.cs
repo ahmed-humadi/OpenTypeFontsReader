@@ -15,5 +15,13 @@ namespace OpenTypeFont.DataTypes
         {
             return new Uint8(b);
         }
+        public static explicit operator char(Uint8 v)
+        {
+            return (char)v.Value;
+        }
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

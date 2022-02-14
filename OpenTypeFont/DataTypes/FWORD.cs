@@ -14,5 +14,13 @@ namespace OpenTypeFont.DataTypes
         {
             _value = value;
         }
+        public static explicit operator FWORD(Int16 v)
+        {
+            return new FWORD(v.Value);
+        }
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }
