@@ -7,29 +7,29 @@ using System.IO;
 using OTFDataType =  OpenTypeFont.DataTypes; // for ambgiusty
 namespace OpenTypeFont.IO
 {
-    public class OpenTypeFontReader
+    public class OpenTypeFontReader : IDisposable       
     {
-        private BinaryReader _oTFReader;
-        public BinaryReader OTFReader
+        private BinaryReader _binaryReader;
+        public BinaryReader BinaryReader
         {
-            get { return _oTFReader; }
-            set { _oTFReader = value; }
+            get { return _binaryReader; }
+            set { _binaryReader = value; }
         }
         public OpenTypeFontReader(byte[] fontData)
         {
-            this.OTFReader = new BinaryReader(new MemoryStream(fontData));
+            this.BinaryReader = new BinaryReader(new MemoryStream(fontData));
         }
         public OTFDataType.Uint8 ReadUint8()
         {
-            return (OTFDataType.Uint8)this.OTFReader.ReadByte();
+            return (OTFDataType.Uint8)this.BinaryReader.ReadByte();
         }
         public OTFDataType.Int8 ReadInt8()
         {
-            return (OTFDataType.Int8)this.OTFReader.ReadSByte();
+            return (OTFDataType.Int8)this.BinaryReader.ReadSByte();
         }
         public OTFDataType.Uint16 ReadUint16()
         {
-            byte[] b = this.OTFReader.ReadBytes(2);
+            byte[] b = this.BinaryReader.ReadBytes(2);
 
             Array.Reverse<byte>(b);
 
@@ -37,7 +37,7 @@ namespace OpenTypeFont.IO
         }
         public OTFDataType.Int16 ReadInt16()
         {
-            byte[] b = this.OTFReader.ReadBytes(2);
+            byte[] b = this.BinaryReader.ReadBytes(2);
 
             Array.Reverse<byte>(b);
 
@@ -45,7 +45,7 @@ namespace OpenTypeFont.IO
         }
         public OTFDataType.Uint24 ReadUint24()
         {
-            byte[] b = this.OTFReader.ReadBytes(3);
+            byte[] b = this.BinaryReader.ReadBytes(3);
 
             Array.Reverse<byte>(b);
 
@@ -55,7 +55,7 @@ namespace OpenTypeFont.IO
         }
         public OTFDataType.Int24 ReadInt24()
         {
-            byte[] b = this.OTFReader.ReadBytes(3);
+            byte[] b = this.BinaryReader.ReadBytes(3);
 
             Array.Reverse<byte>(b);
 
@@ -65,7 +65,7 @@ namespace OpenTypeFont.IO
         }
         public OTFDataType.Int32 ReadInt32()
         {
-            byte[] b = this.OTFReader.ReadBytes(4);
+            byte[] b = this.BinaryReader.ReadBytes(4);
 
             Array.Reverse<byte>(b);
 
@@ -73,7 +73,7 @@ namespace OpenTypeFont.IO
         }
         public OTFDataType.Uint32 ReadUint32()
         {
-            byte[] b = this.OTFReader.ReadBytes(4);
+            byte[] b = this.BinaryReader.ReadBytes(4);
 
             Array.Reverse<byte>(b);
 
@@ -101,6 +101,15 @@ namespace OpenTypeFont.IO
             for (int i = 0; i < 4; i++)
                 tag[i] = ReadUint8();
             return new OTFDataType.Tag(tag);
+        }
+
+        public void Dispose()
+        {
+            if (_binaryReader is not null)
+            {
+                _binaryReader.Dispose();
+                _binaryReader = null;
+            }
         }
     }
 }

@@ -11,9 +11,14 @@ namespace OpenTypeFont.DataTypes
         private readonly ushort _value;
         public readonly ushort Value => _value;
         public Uint16(ushort value) => _value = value;
+
         public static explicit operator Uint16(ushort v)
         {
             return new Uint16(v);
+        }
+        public static implicit operator int(Uint16 v)
+        {
+            return v.Value;
         }
         public override string ToString()
         {
